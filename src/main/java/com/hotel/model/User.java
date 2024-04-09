@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.hotel.dto.RestaurantDto;
 
 import jakarta.annotation.Generated;
@@ -32,13 +34,15 @@ public class User {
 	
 	private String email;
 	
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
-	private USER_ROLE role;
+	private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy ="customer")
 	private List<Order>orders=new ArrayList<>();
+	
 	
 	@ElementCollection
 	private List<RestaurantDto>favorites=new ArrayList<>();
