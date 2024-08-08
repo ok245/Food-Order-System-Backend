@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/food_order_sys
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      STRIPE_API_KEY: sk_test_51PlS3MP3B4JAY0qI4kz4v96ngD42nxkZAi5OIEeEpuSByQdLbEul7s13yz0lzwzgje0Uhc2OHLMdc0Grx9ZQTRiF00o9NvxIWR
+    depends_on:
+      - db
+    deploy:
+      replicas: 3
+      placement:
+        constraints:
+          - node.role == worker
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: food_order_sys
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+
+volumes:
+  mysql-data:

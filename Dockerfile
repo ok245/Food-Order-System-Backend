@@ -1,14 +1,14 @@
 # Use a base image with Java
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the packaged JAR file into the container at the specified working directory
-COPY target/Online-Food-Ordering-0.0.1-SNAPSHOT.jar /app/Online-Food-Ordering.jar
+# Copy the jar file into the container
+COPY target/Online-Food-Ordering-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the port that your Spring Boot application runs on
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Specify the command to run your Spring Boot application when the container starts
-CMD ["java", "-jar", "Online-Food-Ordering.jar"]
+# Run the jar file
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
