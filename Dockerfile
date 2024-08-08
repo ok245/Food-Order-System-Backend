@@ -4,6 +4,12 @@ FROM maven:3.8.6-openjdk-17 AS builder
 # Set the working directory
 WORKDIR /app
 
+# Use Maven image to build the project
+FROM maven:3.9.0-openjdk-17 AS builder
+
+# Set the working directory
+WORKDIR /app
+
 # Copy the Maven POM file and source code
 COPY pom.xml .
 COPY src ./src
