@@ -42,6 +42,8 @@ public class IngredientController {
 			@RequestBody IngredientRequest req
 			) throws Exception {
 		
+		System.out.println("createIngredientItem LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL "+req);
+		
 		IngredientsItem item=ingredientService.createIngredientItem(req.getRestaurantId(),req.getName(),req.getCategoryId());
 		return new ResponseEntity<>(item,HttpStatus.CREATED);
 		

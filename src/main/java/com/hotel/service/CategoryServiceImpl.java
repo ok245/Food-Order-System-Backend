@@ -36,8 +36,8 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public List<Category> findCategoryByRestaurantId(Long id) throws Exception {
 		// TODO Auto-generated method stub
-		Restaurant restaurant=restaurantService.getRestaurantByUserId(id);
-		return categoryRepository.findByRestaurantId(restaurant.getId());
+		//Restaurant restaurant=restaurantService.getRestaurantByUserId(id);
+		return categoryRepository.findByRestaurantId(id);
 	}
 
 	@Override

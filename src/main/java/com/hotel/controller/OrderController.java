@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hotel.Response.PaymentResponse;
 import com.hotel.model.CartItem;
 import com.hotel.model.Order;
 import com.hotel.model.User;
 import com.hotel.request.AddCartItemRequest;
 import com.hotel.request.OrderRequest;
 import com.hotel.service.OrderService;
+import com.hotel.service.PaymentService;
 import com.hotel.service.UserService;
 
 @RestController
@@ -28,17 +30,22 @@ public class OrderController {
 	private OrderService orderService;
 	
 	@Autowired
+	private PaymentService paymentService;
+	
+	@Autowired
 	private UserService userService;
 	
 	
 	@PostMapping("/orders")
-	public ResponseEntity<Order> createOrder(@RequestBody OrderRequest req,
+	public ResponseEntity<PaymentResponse> createOrder(@RequestBody OrderRequest req,
 			@RequestHeader("Authorization") String jwt) throws Exception{
+		
+		
 		
 		User user=userService.findUserByJwtToken(jwt);
 		Order order=orderService.createOrder(req, user);
-		
-		return new ResponseEntity<>(order,HttpStatus.CREATED);
+		PaymentResponse res=paymentService.createPaymentLink(order);
+		return new ResponseEntity<>(res,HttpStatus.CREATED);
 		
 	}
 	

@@ -96,6 +96,7 @@ public class AuthController {
 	
 	@PostMapping("/signin")
 	public ResponseEntity<AuthResponse> signin(@RequestBody LoginRequest req){
+		System.out.println("in Sign in pageppppppppppppppppppppppppppppppppppppppppppppppppppppppppp "+req.toString());
 		
 		String username=req.getEmail();
 		String password=req.getPassword();
@@ -106,7 +107,7 @@ public class AuthController {
 		
         
 		String jwt=JwtProvider.generateToken(authentication);
-		
+		System.out.println("in Sign in JWT%%%%%%%%%%%%%%%%%%%%%%%%%%% "+jwt);
 		AuthResponse authResponse =new AuthResponse();
 		authResponse.setJwt(jwt);
 		authResponse.setMessage("Login Success");
